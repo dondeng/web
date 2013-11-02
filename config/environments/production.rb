@@ -93,4 +93,21 @@ Squash::Application.configure do
   config.log_formatter                     = ::Logger::Formatter.new
 
   config.middleware.insert_before ::Rack::Runtime, Ping
+
+  #settings for sending email
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  #config.action_mailer.default_url_options = { :host => "0.0.0.0", :port => "3000" }
+
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'kopokopo.com',
+    #:domain               => '0.0.0.0:3000',
+    :user_name            => 'admin@kopokopo.com',
+    :password             => 'k0p0.k0p0',
+    :authentication       => :plain
+  }
 end
