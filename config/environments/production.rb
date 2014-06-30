@@ -107,7 +107,7 @@ Squash::Application.configure do
     :domain               => 'kopokopo.com',
     #:domain               => '0.0.0.0:3000',
     :user_name            => 'admin@kopokopo.com',
-    :password             => 'k0p0.k0p0',
+    :password             => '#111k2admin',
     :authentication       => :plain
   }
 end
