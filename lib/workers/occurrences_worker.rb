@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -147,13 +147,23 @@ class OccurrencesWorker
         other_data[k] = v
       end
     end
-    occurrence_attrs['query'] = occurrence_attrs['query'][0, 255] if occurrence_attrs['query']
+    occurrence_attrs['query']    = occurrence_attrs['query'][0, 255] if occurrence_attrs['query']
     occurrence_attrs['revision'] = sha
 
     occurrence          = Occurrence.new(occurrence_attrs)
     occurrence.metadata = JSON.parse(occurrence.metadata).reverse_merge(other_data).to_json
     occurrence.message  ||= occurrence.class_name # hack for Java
-    occurrence.symbolicate                        # must symbolicate before assigning blame
+
+    # must symbolicate before assigning blame
+
+    occurrence.symbolicate
+
+    sourcemaps = environment.source_maps.where(revision: sha)
+    occurrence.sourcemap(*sourcemaps) unless sourcemaps.empty?
+
+    obfuscation_map = ObfuscationMap.joins(:deploy).where(deploys: {environment_id: environment.id, revision: sha}).first
+    occurrence.deobfuscate(obfuscation_map) if obfuscation_map
+
     occurrence
   end
 

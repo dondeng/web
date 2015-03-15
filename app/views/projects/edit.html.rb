@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -22,8 +22,13 @@ module Views
     class Edit < Views::Projects::Show
       include Accordion
 
-      def page_title() "Edit #{@project.name}" end
-      def breadcrumbs() [@project, "Configuration"] end
+      def page_title()
+        "Edit #{@project.name}"
+      end
+
+      def breadcrumbs()
+        [@project, "Configuration"]
+      end
 
       private
 
@@ -249,15 +254,10 @@ end
         h5 "Source-mapping"
 
         p do
-          text "If your toolchain is capable of generating source maps (Clojure is), you can upload those source maps to Squash to un-minify your backtraces, using the "
-          code "upload_source_map"
-          text " binary (included as part of the gem). An example command that could be added to your deploy script:"
-          pre <<-SH, class: 'brush: shell, light: true'
-/path/to/upload_source_map #{@project.api_key} production artifacts/mapping.json https://your.application/assets/minified.js
-          SH
+          text "You will need to generate source maps for your JavaScript if you want backtraces that correspond to files in your project. See the Squash Javascript client README for information on how to generate and upload source maps to Squash."
         end
       end
-      
+
       def java
         p do
           text "Download the "
@@ -419,4 +419,3 @@ end
     end
   end
 end
-

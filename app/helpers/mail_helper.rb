@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 # Helper methods for email content.
 
 module MailHelper
+  include TextBacktraceRendering
+
   # The typical maximum line width for plaintext emails (per RFC 2822).
   EMAIL_WRAP_WIDTH = 78
 

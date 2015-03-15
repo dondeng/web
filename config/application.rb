@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env)
+Bundler.require(*Rails.groups)
 
 # Load preinitializers
 Dir.glob(File.expand_path('../preinitializers/**/*.rb', __FILE__)).each { |f| require f }
@@ -60,7 +60,17 @@ module Squash
       g.integration_tool    :rspec
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    # Configure allowed origins
+    config.middleware.use Rack::Cors do
+      allow do
+        origins *Squash::Configuration.dogfood.allowed_origins
+        resource '/api/1.0/notify', headers: :any, methods: [:post]
+      end
+    end
   end
 end
 
 require 'api/errors'
+
+Sprockets.register_engine '.coffee', Squash::Javascript::SourceMappingCoffeescriptTemplate

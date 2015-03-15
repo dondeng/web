@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@ FactoryGirl.define do
   factory :source_map do
     association :environment
     revision '7f9ef6977510b3487483cf834ea02d3e6d7f6f13'
-    map { Squash::Javascript::SourceMap.new }
+    map GemSourceMap::Map.from_json(Rails.root.join('spec', 'fixtures', 'mapping.json').read)
+    from 'hosted'
+    to 'original'
   end
 end

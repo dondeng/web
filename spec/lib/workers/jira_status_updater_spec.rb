@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe JiraStatusWorker do
+RSpec.describe JiraStatusWorker do
   describe "#perform" do
     it "should update bugs linked to newly-closed JIRA tickets" do
       FakeWeb.register_uri :get,
@@ -41,12 +41,12 @@ describe JiraStatusWorker do
 
       JiraStatusWorker.perform
 
-      linked_bugs.each { |bug| bug.reload.should be_fixed }
-      unlinked_bugs.each { |bug| bug.reload.should_not be_fixed }
+      linked_bugs.each { |bug| expect(bug.reload).to be_fixed }
+      unlinked_bugs.each { |bug| expect(bug.reload).not_to be_fixed }
 
-      linked_bugs.first.events.last.kind.should eql('close')
-      linked_bugs.first.events.last.data['issue'].should eql('FOO-123')
-      linked_bugs.first.events.last.user.should be_nil
+      expect(linked_bugs.first.events.last.kind).to eql('close')
+      expect(linked_bugs.first.events.last.data['issue']).to eql('FOO-123')
+      expect(linked_bugs.first.events.last.user).to be_nil
     end
   end
 end unless Squash::Configuration.jira.disabled?

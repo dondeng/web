@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ def load_groups(configuration_path, values)
 end
 
 def traverse_hash(hsh, *keys)
+  return nil unless hsh
+  
   if keys.size == 1
     hsh[keys.first]
   else

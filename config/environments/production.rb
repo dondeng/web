@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -37,8 +37,7 @@ Squash::Application.configure do
   config.serve_static_assets               = false
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor              = :uglifier
-  # config.assets.css_compressor = :sass
+  config.assets.js_compressor              = Squash::Javascript::SourceMappingJavascriptMinifier
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile                    = false

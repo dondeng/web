@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,28 +12,28 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe NotificationThreshold do
+RSpec.describe NotificationThreshold, type: :model do
   describe "#tripped?" do
-    before :all do
-      @threshold = FactoryGirl.create(:notification_threshold, threshold: 10, period: 1.minute, last_tripped_at: 2.minutes.ago)
+    before :each do
+      @threshold = FactoryGirl.create(:notification_threshold, threshold: 10, period: 10.minutes, last_tripped_at: 20.minutes.ago)
     end
 
     it "should return false if the threshold has not yet been exceeded within the period" do
       FactoryGirl.create_list :rails_occurrence, 9, bug: @threshold.bug
-      @threshold.should_not be_tripped
+      expect(@threshold).not_to be_tripped
     end
 
     it "should return true if the threshold has been exceeded within the period" do
       FactoryGirl.create_list :rails_occurrence, 10, bug: @threshold.bug
-      @threshold.should be_tripped
+      expect(@threshold).to be_tripped
     end
 
     it "should return false if the threshold was tripped within the last period" do
       FactoryGirl.create_list :rails_occurrence, 10, bug: @threshold.bug
       @threshold.last_tripped_at = 45.seconds.ago
-      @threshold.should_not be_tripped
+      expect(@threshold).not_to be_tripped
     end
   end
 end

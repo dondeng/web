@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Blamer::Simple do
+RSpec.describe Blamer::Simple do
   it "should set the bug's file and line using git-blame" do
     @project   = FactoryGirl.create(:project)
     @env       = FactoryGirl.create(:environment, project: @project)
@@ -42,10 +42,10 @@ describe Blamer::Simple do
                                                                    "symbol" => "foo"}]}],
                                     revision:   '2dc20c984283bede1f45863b8f3b4dd9b5b554cc')
     bug         = Blamer::Simple.new(@occurrence).find_or_create_bug!
-    bug.file.should eql('[S] 10e95a0abb419d791a30d5dd0fe163b6f1c2bbf1e10ef0a303f3315cd149bcc5')
-    bug.special_file?.should be_true
-    bug.line.should eql(1)
-    bug.blamed_revision.should be_nil
+    expect(bug.file).to eql('[S] 10e95a0abb419d791a30d5dd0fe163b6f1c2bbf1e10ef0a303f3315cd149bcc5')
+    expect(bug.special_file?).to eql(true)
+    expect(bug.line).to eql(1)
+    expect(bug.blamed_revision).to be_nil
   end
 
   it "should not touch the Git repo at all when processing an occurrence" do
@@ -71,7 +71,7 @@ describe Blamer::Simple do
                    'revision'    => @commit.sha,
                    'user_data'   => {'foo' => 'bar'})
 
-    @project.should_not_receive :repo
+    expect(@project).not_to receive :repo
     OccurrencesWorker.new(@params).perform
   end
 end

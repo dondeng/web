@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
 group :development do
   gem 'yard', require: nil
   gem 'redcarpet', require: nil, platform: :mri
-
-  gem 'json-schema', '< 2.0.0' # version 2.0 breaks fdoc
-  gem 'fdoc'
 end
 
 gem 'sql_origin', groups: [:development, :test]

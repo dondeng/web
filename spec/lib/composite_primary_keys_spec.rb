@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,18 +12,18 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe ActiveRecord::Base do
+RSpec.describe ActiveRecord::Base do
   describe "#touch" do
     it "should update a single-key record" do
       user = FactoryGirl.create(:user, created_at: 1.day.ago, updated_at: 1.day.ago)
-      -> { user.touch.should be_true }.should change(user, :updated_at)
+      expect { expect(user.touch).to eql(true) }.to change(user, :updated_at)
     end
 
     it "should update a multi-key record" do
       nt = FactoryGirl.create(:notification_threshold, last_tripped_at: 1.day.ago)
-      -> { nt.touch(:last_tripped_at).should be_true }.should change(nt, :last_tripped_at)
+      expect { expect(nt.touch(:last_tripped_at)).to eql(true) }.to change(nt, :last_tripped_at)
     end
   end
 end

@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -36,9 +36,6 @@ class BugsController < ApplicationController
       'occurrences' => %w(bugs.occurrences_count DESC)
   }
   SORTS.default     = SORTS['latest']
-
-  # Valid columns to filter the bug list on.
-  VALID_FILTER_KEYS = %w( fixed irrelevant assigned_user_id deploy_id search any_occurrence_crashed )
 
   # Number of Bugs to return per page.
   PER_PAGE          = 50
@@ -100,7 +97,7 @@ class BugsController < ApplicationController
       end
 
       format.json do
-        filter = (params[:filter] || {}).slice(*VALID_FILTER_KEYS)
+        filter = (params[:filter] || ActionController::Parameters.new).permit(:fixed, :irrelevant, :assigned_user_id, :deploy_id, :search, :any_occurrence_crashed)
         filter.each { |k, v| filter[k] = nil if v == '' }
 
         filter.delete('deploy_id') if filter['deploy_id'].nil? # no deploy set means ANY deploy, not NO deploy
@@ -395,7 +392,8 @@ class BugsController < ApplicationController
     params.require(:bug).permit(:assigned_user, :assigned_user_id,
                                 :resolution_revision, :fixed, :fix_deployed,
                                 :irrelevant, :duplicate_of, :duplicate_of_id,
-                                :jira_isssue, :jira_status_id)
+                                :jira_isssue, :jira_status_id, :page_threshold,
+                                :page_period)
   end
 
   def comment_params

@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Jira::StatusesController do
+RSpec.describe Jira::StatusesController, type: :controller do
   describe "#index" do
     it "should a list of known statuses" do
       FakeWeb.register_uri :get,
@@ -22,10 +22,10 @@ describe Jira::StatusesController do
                            response: Rails.root.join('spec', 'fixtures', 'jira_statuses.json')
 
       get :index, format: 'json'
-      response.status.should eql(200)
+      expect(response.status).to eql(200)
       body = JSON.parse(response.body)
-      body.map { |st| st['name'] }.
-          should eql(["Open", "In Progress", "Reopened", "Resolved", "Closed",
+      expect(body.map { |st| st['name'] }).
+          to eql(["Open", "In Progress", "Reopened", "Resolved", "Closed",
                       "Needs Review", "Approved", "Hold Pending Info", "IceBox",
                       "Not Yet Started", "Started", "Finished", "Delivered",
                       "Accepted", "Rejected", "Allocated", "Build", "Verify",

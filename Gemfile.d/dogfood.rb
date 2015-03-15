@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -16,4 +16,5 @@ gem 'squash_ruby', '>= 1.2.0', require: 'squash/ruby'
 gem 'squash_rails', require: 'squash/rails'
 gem 'squash_ios_symbolicator', require: 'squash/symbolicator'
 gem 'squash_javascript', require: 'squash/javascript'
+gem 'sourcemap'
 gem 'squash_java', require: 'squash/java'

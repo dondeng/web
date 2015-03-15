@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -171,7 +171,7 @@ module Blamer
 
     # @abstract
     #
-    # @return Hash<Symbol, Object> Ahash of search criteria to be used in a
+    # @return [Hash<Symbol, Object>] A hash of search criteria to be used in a
     #   `WHERE` clause to locate a Bug to file an Occurrence under.
 
     def bug_search_criteria

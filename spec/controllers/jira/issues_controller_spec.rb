@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Jira::IssuesController do
+RSpec.describe Jira::IssuesController, type: :controller do
   describe "#show" do
     it "should return information about a JIRA issue" do
       FakeWeb.register_uri :get,
@@ -22,9 +22,9 @@ describe Jira::IssuesController do
                            response: Rails.root.join('spec', 'fixtures', 'jira_issue.json')
 
       get :show, id: 'FOO-123', format: 'json'
-      response.status.should eql(200)
+      expect(response.status).to eql(200)
       body = JSON.parse(response.body)
-      body['fields']['summary'].should eql("Double RTs on coffee bar Twitter monitor")
+      expect(body['fields']['summary']).to eql("Double RTs on coffee bar Twitter monitor")
     end
 
     it "should 404 if the JIRA issue is not found" do
@@ -33,7 +33,7 @@ describe Jira::IssuesController do
                            response: Rails.root.join('spec', 'fixtures', 'jira_issue_404.json')
 
       get :show, id: 'FOO-124', format: 'json'
-      response.status.should eql(404)
+      expect(response.status).to eql(404)
     end
   end
 end unless Squash::Configuration.jira.disabled?

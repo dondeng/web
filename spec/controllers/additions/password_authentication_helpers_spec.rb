@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
 if Squash::Configuration.authentication.strategy == 'password'
   class FakeController
@@ -23,25 +23,25 @@ if Squash::Configuration.authentication.strategy == 'password'
     include PasswordAuthenticationHelpers
   end
 
-  describe PasswordAuthenticationHelpers do
+  RSpec.describe PasswordAuthenticationHelpers, type: :model do
     before(:each) { @controller = FakeController.new }
 
     describe "#log_in" do
       before(:all) { @user = FactoryGirl.create(:user, password: 'password123') }
 
       it "should accept a valid username and password" do
-        @controller.should_receive(:log_in_user).once.with(@user)
-        @controller.log_in(@user.username, 'password123').should be_true
+        expect(@controller).to receive(:log_in_user).once.with(@user)
+        expect(@controller.log_in(@user.username, 'password123')).to eql(true)
       end
 
       it "should not accept an unknown username" do
-        @controller.should_not_receive :log_in_user
-        @controller.log_in('unknown', 'password123').should be_false
+        expect(@controller).not_to receive :log_in_user
+        expect(@controller.log_in('unknown', 'password123')).to eql(false)
       end
 
       it "should not accept an invalid password" do
-        @controller.should_not_receive :log_in_user
-        @controller.log_in(@user.username, 'password-wrong').should be_false
+        expect(@controller).not_to receive :log_in_user
+        expect(@controller.log_in(@user.username, 'password-wrong')).to eql(false)
       end
     end
   end

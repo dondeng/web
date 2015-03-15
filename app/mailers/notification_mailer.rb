@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 # send all emails.
 
 class NotificationMailer < ActionMailer::Base
-  helper :mail
+  helper :mail, :application
 
   default from: Squash::Configuration.mailer.from
   default_url_options.merge! Squash::Configuration.mailer.default_url_options.symbolize_keys

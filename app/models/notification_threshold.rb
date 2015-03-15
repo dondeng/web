@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -59,6 +59,6 @@ class NotificationThreshold < ActiveRecord::Base
 
   def tripped?
     (last_tripped_at.nil? || last_tripped_at < period.seconds.ago) &&
-        bug.occurrences.where("occurred_at >= ?", threshold.seconds.ago).count >= threshold
+        bug.occurrences.where('occurred_at >= ?', period.seconds.ago).count >= threshold
   end
 end

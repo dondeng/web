@@ -1,3 +1,12 @@
 ---
-from: admin@kopokopo.com
+from: admin.kopokopo.com
 domain: kopokopo.com
+strategy: sendmail
+smtp_settings:
+  address:
+  port:
+  domain:
+  user_name:
+  password:
+  authentication:
+  enable_starttls_auto:

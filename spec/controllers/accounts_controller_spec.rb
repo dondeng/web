@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,19 +12,19 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe AccountsController do
+RSpec.describe AccountsController, type: :controller do
   describe "#update" do
-    before :all do
+    before :each do
       @user  = FactoryGirl.create(:user)
       @attrs = {password: 'newpass', password_confirmation: 'newpass', first_name: 'NewFN', last_name: 'NewLN'}
     end
 
     it "should require a logged-in user" do
       patch :update, user: @attrs
-      response.should redirect_to(login_url(next: request.fullpath))
-      -> { @user.reload }.should_not change(@user, :first_name)
+      expect(response).to redirect_to(login_url(next: request.fullpath))
+      expect { @user.reload }.not_to change(@user, :first_name)
     end
 
     context '[authenticated]' do
@@ -32,24 +32,22 @@ describe AccountsController do
 
       it "should update the user and redirect to the account page" do
         patch :update, user: @attrs
-        response.should redirect_to(account_url)
+        expect(response).to redirect_to(account_url)
 
-        @user.reload.first_name.should eql('NewFN')
-        @user.last_name.should eql('NewLN')
-        @user.authentic?('newpass').should be_true
+        expect(@user.reload.first_name).to eql('NewFN')
+        expect(@user.last_name).to eql('NewLN')
+        expect(@user.authentic?('newpass')).to eql(true)
       end
 
       it "should render the account page on failure" do
         patch :update, user: @attrs.merge(password_confirmation: 'oops')
-        response.should render_template('show')
+        expect(response).to render_template('show')
       end
 
       it "should not update the password if it's not provided" do
         @user.reload
         patch :update, user: @attrs.merge('password' => '')
-        response.should redirect_to(account_url)
-
-        -> { @user.reload }.should_not change(@user, :crypted_password)
+        expect { @user.reload }.not_to change(@user, :crypted_password)
       end
     end
   end if Squash::Configuration.authentication.strategy == 'password'

@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -20,10 +20,9 @@ jQuery.fn.applyContext = ->
   for tag in this
     do (tag) ->
       element = $(tag)
-      $.ajax "/projects/#{element.attr 'data-project'}/context.json",
+      $.ajax "/projects/#{element.attr 'data-project'}/commits/#{element.data 'revision'}/context.json",
         type: 'GET'
         data: $.param
-          revision: element.data('revision')
           file: element.data('file')
           line: element.data('line')
           context: (element.data('context') || 3)

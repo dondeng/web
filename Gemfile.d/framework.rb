@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-gem 'rails', '>= 4.0.0'
+gem 'rails', '4.0.13'
 
 gem 'configoro', '>= 1.2.4'
 gem 'rack-cors', require: 'rack/cors'

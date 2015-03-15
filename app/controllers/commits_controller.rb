@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -30,6 +30,18 @@ class CommitsController < ApplicationController
   respond_to :json
 
   # Responds with the 10 most recent commits.
+  #
+  # Routes
+  # ------
+  #
+  # * `GET /projects/:project_id/commits`
+  #
+  # Path Parameters
+  # ---------------
+  #
+  # |              |                     |
+  # |:-------------|:--------------------|
+  # | `project_id` | The Project's slug. |
 
   def index
     @commits = @project.repo.log(10)
@@ -43,7 +55,7 @@ class CommitsController < ApplicationController
   # Routes
   # ------
   #
-  # * `GET /project/:id/context.json`
+  # * `GET /projects/:project_id/commits/:id/context.json`
   #
   # Path Parameters
   # ---------------

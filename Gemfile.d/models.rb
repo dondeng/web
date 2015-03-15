@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
 
 gem 'pg', platform: :mri
 gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
-gem 'has_metadata_column', github: 'RISCfuture/has_metadata_column'
+gem 'has_metadata_column'
 gem 'slugalicious'
 gem 'email_validation'
 gem 'url_validation'
 gem 'json_serialize'
 gem 'validates_timeliness'
-gem 'find_or_create_on_scopes', '>= 1.2.1'
-gem 'composite_primary_keys', github: 'RISCfuture/composite_primary_keys', branch: 'rebase'
+gem 'find_or_create_on_scopes'
+gem 'composite_primary_keys'
 gem 'rails-observers'
 
 conditionally('activerecord.cursors', true) do

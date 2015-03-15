@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -51,6 +51,10 @@ jQuery.fn.editorLink = ->
         url = (file) -> "emacs://open?" + $.param({url: "file://#{file}", line: line})
         command = "emacs +#{line} #{shellEscape(file)}"
         element.attr('title', "This link requires EmacsURLHandler to work.").tooltip()
+      else if editor == 'rubymine'
+        url = (file) ->
+          "x-mine://open?" + $.param({url: "file://#{file}", line: line})
+        command = "mine #{shellEscape(file)}:#{line}"
       else
         return
 

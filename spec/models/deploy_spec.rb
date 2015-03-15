@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Deploy do
+RSpec.describe Deploy, type: :model do
   context "[hooks]" do
     it "should queue up a DeployFixMarker job" do
       if RSpec.configuration.use_transactional_fixtures
@@ -27,8 +27,8 @@ describe Deploy do
       deploy      = FactoryGirl.build(:deploy, environment: environment)
 
       dfm = double('DeployFixMarker')
-      DeployFixMarker.should_receive(:new).once.with(deploy).and_return(dfm)
-      dfm.should_receive(:perform).once
+      expect(DeployFixMarker).to receive(:new).once.with(deploy).and_return(dfm)
+      expect(dfm).to receive(:perform).once
 
       deploy.save!
     end
@@ -39,20 +39,20 @@ describe Deploy do
       it "should set it to true if a release is created" do
         @env.project.update_attribute :uses_releases, false
         FactoryGirl.create :release, environment: @env
-        @env.project(true).uses_releases?.should be_true
+        expect(@env.project(true).uses_releases?).to eql(true)
       end
 
       it "should not set it to false if there is a subsequent deploy" do
         @env.project(true).update_attribute :uses_releases, true
         FactoryGirl.create :deploy, environment: @env
-        @env.project.uses_releases?.should be_true
+        expect(@env.project.uses_releases?).to eql(true)
       end
 
       it "should not set it to true if the override is set" do
         @env.project.uses_releases = false
         @env.project.uses_releases_override = true
         FactoryGirl.create :release, environment: @env
-        @env.project(true).uses_releases?.should be_false
+        expect(@env.project(true).uses_releases?).to eql(false)
       end
     end
   end
@@ -61,11 +61,11 @@ describe Deploy do
     before(:all) { @env = FactoryGirl.create(:environment) }
 
     it "should return true for a release" do
-      FactoryGirl.create(:release, environment: @env).should be_release
+      expect(FactoryGirl.create(:release, environment: @env)).to be_release
     end
 
     it "should return false for a deploy" do
-      FactoryGirl.create(:deploy, environment: @env).should_not be_release
+      expect(FactoryGirl.create(:deploy, environment: @env)).not_to be_release
     end
   end
 
@@ -75,24 +75,24 @@ describe Deploy do
       bug1 = FactoryGirl.create :bug, deploy: deploy
       bug2 = FactoryGirl.create :bug, deploy: deploy
 
-      deploy.devices_affected.should == 0
+      expect(deploy.devices_affected).to eq(0)
 
       FactoryGirl.create :rails_occurrence, bug: bug1, device_id: 'hello'
       FactoryGirl.create :rails_occurrence, bug: bug1, device_id: 'hello'
 
-      deploy.devices_affected.should == 1
+      expect(deploy.devices_affected).to eq(1)
 
       FactoryGirl.create :rails_occurrence, bug: bug2, device_id: 'goodbye'
 
-      deploy.devices_affected.should == 2
+      expect(deploy.devices_affected).to eq(2)
 
       FactoryGirl.create :rails_occurrence, bug: bug1, device_id: 'goodbye'
 
-      deploy.devices_affected.should == 2
+      expect(deploy.devices_affected).to eq(2)
 
       FactoryGirl.create :rails_occurrence, bug: bug1, device_id: 'one more'
 
-      deploy.devices_affected.should == 3
+      expect(deploy.devices_affected).to eq(3)
     end
   end
 end

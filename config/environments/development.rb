@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -41,7 +41,11 @@ Squash::Application.configure do
   # number of complex assets.
   config.assets.debug                        = true
 
+  # Raises error for missing translations
+  # config.action_view.raise_on_missing_translations = true
+
   # Configure development JavaScript self-reporting
+  config.middleware.delete 'Rack::Cors'
   config.middleware.use Rack::Cors do
     allow do
       origins "localhost:#{$own_port}",

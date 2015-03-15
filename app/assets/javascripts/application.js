@@ -1,4 +1,4 @@
-// Copyright 2013 Square Inc.
+// Copyright 2014 Square Inc.
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+// This is a manifest file that'll be compiled into application, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -36,7 +36,38 @@
 //= require flot/stack
 //= require flot/time
 //
-//= require sh/manifest
+//= require sh/shCore
+//= require sh/shBrushAppleScript
+//= require sh/shBrushAS3
+//= require sh/shBrushBash
+//= require sh/shBrushColdFusion
+//= require sh/shBrushCpp
+//= require sh/shBrushCSharp
+//= require sh/shBrushCss
+//= require sh/shBrushDelphi
+//= require sh/shBrushDiff
+//= require sh/shBrushErlang
+//= require sh/shBrushGit
+//= require sh/shBrushGroovy
+//= require sh/shBrushHaxe
+//= require sh/shBrushJava
+//= require sh/shBrushJavaFX
+//= require sh/shBrushJScript
+//= require sh/shBrushObjC
+//= require sh/shBrushPerl
+//= require sh/shBrushPhp
+//= require sh/shBrushPlain
+//= require sh/shBrushPowerShell
+//= require sh/shBrushPython
+//= require sh/shBrushRuby
+//= require sh/shBrushSass
+//= require sh/shBrushScala
+//= require sh/shBrushSql
+//= require sh/shBrushTAP
+//= require sh/shBrushTypeScript
+//= require sh/shBrushVb
+//= require sh/shBrushXml
+//= require sh/shBrushYaml
 //
 //= require bootstrap
 //

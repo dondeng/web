@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Watch do
+RSpec.describe Watch, type: :model do
   context "[observers]" do
     before :all do
       @user = FactoryGirl.create(:user)
@@ -27,12 +27,12 @@ describe Watch do
 
     it "should fill a user's feed with events when a bug is watched" do
       FactoryGirl.create :watch, user: @user, bug: @unwatched_bug
-      @user.user_events.pluck(:event_id).should include(@unwatched_event.id)
+      expect(@user.user_events.pluck(:event_id)).to include(@unwatched_event.id)
     end
 
     it "should remove events from a user's feed when a bug is unwatched" do
       @watch.destroy
-      @user.user_events.pluck(:event_id).should_not include(@watched_event.id)
+      expect(@user.user_events.pluck(:event_id)).not_to include(@watched_event.id)
     end
   end
 end

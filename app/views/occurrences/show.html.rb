@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ module Views
   module Occurrences
     # @private
     class Show < Views::Layouts::Application
-      include BacktraceRendering
+      include HTMLBacktraceRendering
 
       needs :project, :environment, :bug, :occurrence
 
@@ -98,7 +98,7 @@ module Views
       def other_occurrence_info
         if @occurrence.web?
           h5 "Request"
-          pre "#{@occurrence.request_method} #{@occurrence.url.to_s}", class: 'scrollable'
+          pre "#{@occurrence.request_method} #{@occurrence.url.try!(:to_s) || '(invalid URL)'}", class: 'scrollable'
         end
       end
 

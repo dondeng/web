@@ -19,8 +19,8 @@ Squash consists of the following components:
 
 This project is the front-end and the API.
 
-Pull requests are more than welcome; please check out {file:CONTRIBUTING} for
-details.
+Pull requests are more than welcome; please check out
+[CONTRIBUTING.md](file.CONTRIBUTING.html) for details.
 
 How to Install
 --------------
@@ -54,7 +54,7 @@ Squash requires the following:
 
 * Ruby 1.9.2 or newer (JRuby with `--1.9` is supported)
 * Multithreading support (see the next section)
-* PostgreSQL 9.0 or newer
+* PostgreSQL 9.1 or newer
 * The Bundler gem
 * Git 1.7 or newer
 
@@ -150,7 +150,7 @@ multiple private methods.
 In addition to the usual helpers (in `app/helpers`), there are view mixins under
 `app/views/additions` that simplify view coding.
 
-Embedded code snippets are all rendered using the {ProjectsController#context}
+Embedded code snippets are all rendered using the {CommitsController#context}
 action. This action loads the appropriate file and revision from the Git
 repository and returns a snippet plus the name of the SyntaxHighlighter brush to
 use. The brush is determined from the file name/extension; the mapping can be

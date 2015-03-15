@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ $(window).ready ->
     if target.hasClass('shown')
       link.find('.icon-chevron-down').removeClass('icon-chevron-down').addClass 'icon-chevron-up'
 
+    e.preventDefault()
     return false
 
   # Clicking elsewhere hides all dropdowns

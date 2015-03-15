@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe "/projects/:project_id/memberships" do
+RSpec.describe "/projects/:project_id/memberships", type: :routing do
   describe "/:id [PATCH]" do
     it "should route to usernames with dots in them" do
       expect(patch: '/projects/my-project/memberships/user.dot.json').

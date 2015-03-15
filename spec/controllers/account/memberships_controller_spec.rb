@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Account::MembershipsController do
+RSpec.describe Account::MembershipsController, type: :controller do
   describe "#index" do
     before :all do
       @user               = FactoryGirl.create(:user)
@@ -24,8 +24,8 @@ describe Account::MembershipsController do
 
     it "should require a logged-in user" do
       get :index, format: 'json'
-      response.status.should eql(401)
-      response.body.should be_blank
+      expect(response.status).to eql(401)
+      expect(response.body).to be_blank
     end
 
     context "[authenticated]" do
@@ -33,14 +33,14 @@ describe Account::MembershipsController do
 
       it "should load the first 10 memberships" do
         get :index, format: 'json'
-        response.status.should eql(200)
-        JSON.parse(response.body).map { |r| r['project']['name'] }.should eql(@memberships.sort_by(&:created_at).reverse.map(&:project).map(&:name)[0, 10])
+        expect(response.status).to eql(200)
+        expect(JSON.parse(response.body).map { |r| r['project']['name'] }).to eql(@memberships.sort_by(&:created_at).reverse.map(&:project).map(&:name)[0, 10])
       end
 
       it "should filter memberships by name when a query is given" do
         get :index, format: 'json', query: 'filter'
-        response.status.should eql(200)
-        JSON.parse(response.body).map { |r| r['project']['name'] }.should eql(@filter_memberships.sort_by(&:created_at).reverse.map(&:project).map(&:name)[0, 10])
+        expect(response.status).to eql(200)
+        expect(JSON.parse(response.body).map { |r| r['project']['name'] }).to eql(@filter_memberships.sort_by(&:created_at).reverse.map(&:project).map(&:name)[0, 10])
       end
     end
   end

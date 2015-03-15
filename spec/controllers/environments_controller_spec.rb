@@ -1,4 +1,4 @@
-# Copyright 2013 Square Inc.
+# Copyright 2014 Square Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -12,16 +12,16 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe EnvironmentsController do
+RSpec.describe EnvironmentsController, type: :controller do
   describe "#update" do
     before(:each) { @environment = FactoryGirl.create(:environment, sends_emails: true) }
 
     it "should require a logged-in user" do
       patch :update, polymorphic_params(@environment, false, environment: {sends_emails: false}, format: 'json')
-      response.status.should eql(401)
-      @environment.reload.sends_emails?.should be_true
+      expect(response.status).to eql(401)
+      expect(@environment.reload.sends_emails?).to eql(true)
     end
 
     context '[authenticated]' do
@@ -32,27 +32,27 @@ describe EnvironmentsController do
         login_as user
 
         patch :update, polymorphic_params(@environment, false, environment: {sends_emails: false}, format: 'json')
-        response.status.should eql(200)
-        @environment.reload.sends_emails?.should be_false
+        expect(response.status).to eql(200)
+        expect(@environment.reload.sends_emails?).to eql(false)
       end
 
       it "should not allow members to alter the environment" do
         login_as FactoryGirl.create(:membership, project: @environment.project, admin: false).user
         patch :update, polymorphic_params(@environment, false, environment: {sends_emails: false}, format: 'json')
-        response.status.should eql(403)
-        @environment.reload.sends_emails?.should be_true
+        expect(response.status).to eql(403)
+        expect(@environment.reload.sends_emails?).to eql(true)
       end
 
       it "should allow owners to alter the environment" do
         patch :update, polymorphic_params(@environment, false, environment: {sends_emails: false}, format: 'json')
-        response.status.should eql(200)
-        @environment.reload.sends_emails?.should be_false
-        response.body.should eql(@environment.to_json)
+        expect(response.status).to eql(200)
+        expect(@environment.reload.sends_emails?).to eql(false)
+        expect(response.body).to eql(@environment.to_json)
       end
 
       it "should not allow protected fields to be set" do
-        -> { patch :update, polymorphic_params(@environment, false, environment: {bugs_count: 128}, format: 'json') }.should_not change(@environment, :bugs_count)
-        response.status.should eql(400)
+        expect { patch :update, polymorphic_params(@environment, false, environment: {bugs_count: 128}, format: 'json') }.not_to change(@environment, :bugs_count)
+        expect { @environment.reload }.not_to change(@environment, :bugs_count)
       end
     end
   end
