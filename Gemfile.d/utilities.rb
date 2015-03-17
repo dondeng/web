@@ -17,3 +17,4 @@ gem 'git', github: 'RISCfuture/ruby-git'
 gem 'user-agent'
 
 gem 'safe_yaml'
+gem 'capistrano', '~> 3.3.0'

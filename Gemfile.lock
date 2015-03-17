@@ -47,6 +47,12 @@ GEM
     arel (4.0.2)
     boolean (1.0.1)
     builder (3.1.4)
+    capistrano (3.3.5)
+      capistrano-stats (~> 1.1.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-stats (1.1.1)
     closure-compiler (1.1.11)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -55,6 +61,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.0)
+    colorize (0.7.5)
     commonjs (0.2.7)
     composite_primary_keys (6.0.8)
       activerecord (~> 4.0.6)
@@ -106,6 +113,9 @@ GEM
     mime-types (2.4.3)
     minitest (4.7.5)
     multi_json (1.10.1)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
     pg (0.18.1)
     plist (3.1.0)
     polyglot (0.3.5)
@@ -193,6 +203,10 @@ GEM
       json
     squash_uploader (1.0.1)
       json
+    sshkit (1.7.1)
+      colorize (>= 0.7.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     stringex (2.5.2)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -224,6 +238,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-jdbcpostgresql-adapter
+  capistrano (~> 3.3.0)
   closure-compiler
   coffee-rails
   composite_primary_keys

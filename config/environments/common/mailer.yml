@@ -1,12 +1,12 @@
 ---
-from: admin.kopokopo.com
+from: admin@kopokopo.com
 domain: kopokopo.com
-strategy: sendmail
+strategy: smtp
 smtp_settings:
-  address:
-  port:
-  domain:
-  user_name:
-  password:
-  authentication:
-  enable_starttls_auto:
+  address: smtp.gmail.com
+  port: '587'
+  domain: kopokopo.com
+  user_name: admin@kopokopo.com
+  password: "#111k2admin"
+  authentication: plain
+  enable_starttls_auto: false

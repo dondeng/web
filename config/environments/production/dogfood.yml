@@ -1,4 +1,4 @@
 ---
 disabled: true
 api_key: YOUR_PRODUCTION_SQUASH_API_KEY
-api_host: http://squash.kopokopo.com
+api_host: https://squash.kopokopo.com
