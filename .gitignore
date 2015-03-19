@@ -3,13 +3,7 @@
 node_modules
 tmp/cache/*
 
-config/environments/common/authentication.yml
-config/environments/common/concurrency.yml
-config/environments/common/jira.yml
-config/environments/common/mailer.yml
-config/environments/common/pagerduty.yml
-config/environments/common/repositories.yml
-config/environments/common/activerecord.yml
 config/environments/production/dogfood.yml
 config/environments/production/javascript_dogfood.yml
 config/environments/production/mailer.yml
+config/environments/common
