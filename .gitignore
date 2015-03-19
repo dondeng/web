@@ -7,3 +7,4 @@ config/environments/production/dogfood.yml
 config/environments/production/javascript_dogfood.yml
 config/environments/production/mailer.yml
 config/environments/common
+config/database.yml
